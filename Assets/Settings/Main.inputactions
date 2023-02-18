@@ -1,0 +1,56 @@
+{
+    "name": "Main",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "c78467d4-dcf3-4245-9166-922baee329a9",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Button",
+                    "id": "55058484-c4d4-487c-97c1-ae013ba28549",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "AD",
+                    "id": "0152944a-0dc9-4351-a1d7-b790eeda150f",
+                    "path": "1DAxis",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "61e0df3e-9ebe-4543-a84f-784487eaeb27",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "fae75f79-4f17-40e2-910c-12b59896ce46",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
