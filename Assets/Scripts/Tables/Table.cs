@@ -5,7 +5,7 @@ using UnityEngine;
 public class Table : MonoBehaviour
 {
     [Header("Display stuff")]
-    [SerializeField] private float spacing;
+    [SerializeField] private float spacing = 1.5f;
 
     [Header("API Stuff")]
     [SerializeField] private int maxSize;
