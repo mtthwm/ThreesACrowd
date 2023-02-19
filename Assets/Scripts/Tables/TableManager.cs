@@ -7,6 +7,11 @@ public class TableManager : MonoBehaviour
 
     [SerializeField] private List<Table> tables = new List<Table>();
 
+    private void Start()
+    {
+        UpdatePositions();
+    }
+
     public void Relocate (Customer c)
     {
         List<Table> otherTables = tables.FindAll((t) => t != c.CurrentTable);

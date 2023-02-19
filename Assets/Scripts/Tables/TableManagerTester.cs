@@ -10,16 +10,17 @@ public class TableManagerTester : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(Test());
+    }
+
+    private IEnumerator Test ()
+    {
         Debug.Log(tableManager);
+        yield return new WaitForSeconds(5f);
         table1.Deliver(Customer.Order.Drink);
         Debug.Log(tableManager);
-        //table2.Deliver(Customer.Order.Drink);
-        //Debug.Log(tableManager);
-        //table1.Deliver(Customer.Order.Entree);
-        //Debug.Log(tableManager);
-        //table2.Deliver(Customer.Order.Appetizer);
-        //Debug.Log(tableManager);
-        //table2.Deliver(Customer.Order.Entree);
-        //Debug.Log(tableManager);
+        yield return new WaitForSeconds(5f);
+        table2.Deliver(Customer.Order.Appetizer);
+        Debug.Log(tableManager);
     }
 }
