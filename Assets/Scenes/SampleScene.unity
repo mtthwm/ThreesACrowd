@@ -252,7 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 880574d0c06b7ee44874fb1ad8b57bed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spacing: 1
+  spacing: 1.5
   maxSize: 3
   occupants:
   - {fileID: 974563878}
@@ -705,7 +705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 880574d0c06b7ee44874fb1ad8b57bed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spacing: 1
+  spacing: 1.5
   maxSize: 3
   occupants:
   - {fileID: 1083232139}
