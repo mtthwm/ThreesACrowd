@@ -16,7 +16,7 @@ public class CollisionInteractionDriver : MonoBehaviour
         if (obj != null)
         {
             m_obj = obj;
-            m_obj.TriggerHover();
+            m_obj.TriggerHoverEnter();
         }
     }
 
@@ -25,6 +25,7 @@ public class CollisionInteractionDriver : MonoBehaviour
         CollidableObject obj = collision.gameObject.GetComponent<CollidableObject>();
         if (obj != null)
         {
+            m_obj.TriggerHoverExit();
             m_obj = null;
         }
     }

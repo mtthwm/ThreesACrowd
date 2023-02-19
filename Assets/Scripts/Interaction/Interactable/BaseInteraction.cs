@@ -23,11 +23,19 @@ public abstract class BaseInteraction : MonoBehaviour
         }
     }
 
-    public void HandleHover(GameObject origin, Vector3 position)
+    public void HandleHoverEnter(GameObject origin, Vector3 position)
     {
         if (origin == this.gameObject)
         {
-            Hover();
+            HoverEnter();
+        }
+    }
+
+    public void HandleHoverExit(GameObject origin, Vector3 position)
+    {
+        if (origin == this.gameObject)
+        {
+            HoverExit();
         }
     }
 
@@ -35,5 +43,9 @@ public abstract class BaseInteraction : MonoBehaviour
 
     protected abstract void Action();
 
-    protected virtual void Hover() { }
+    protected virtual void HoverEnter() { }
+
+    protected virtual void HoverExit() { }
+
+
 }

@@ -6,7 +6,8 @@ using UnityEngine;
 public class InventoryInteraction : BaseInteraction
 {
     public delegate void InventoryHoverAction (InventoryItem[] items);
-    public event InventoryHoverAction OnHover;
+    public static event InventoryHoverAction OnHoverEnter;
+    public static event InventoryHoverAction OnHoverExit;
 
     private enum InventoryModificationMode
     {
@@ -35,9 +36,14 @@ public class InventoryInteraction : BaseInteraction
         }
     }
 
-    protected override void Hover()
+    protected override void HoverEnter ()
     {
-        OnHover?.Invoke(items);
+        OnHoverEnter?.Invoke(items);
+    }
+
+    protected override void HoverExit ()
+    {
+        OnHoverExit?.Invoke(items);
     }
 
     public InventoryItem[] GetItems ()

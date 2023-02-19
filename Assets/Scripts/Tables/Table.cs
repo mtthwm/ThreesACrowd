@@ -9,7 +9,7 @@ public class Table : MonoBehaviour
     [SerializeField] private float spacing = 1.5f;
 
     [Header("API Stuff")]
-    [SerializeField] private int maxSize;
+    [SerializeField] public int maxSize;
     [SerializeField] public Customer[] occupants;
     [SerializeField] private SpriteRenderer sprite;
 
@@ -97,6 +97,14 @@ public class Table : MonoBehaviour
         }
         occupants[index] = c;
         return true;
+    }
+
+    public void Clear ()
+    {
+        for (int i = 0; i < occupants.Length; i++)
+        {
+            occupants[i] = null;
+        }
     }
 
     public void RemovePair ()

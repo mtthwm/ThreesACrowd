@@ -35,12 +35,12 @@ public class CollidableObject : MonoBehaviour
         m_interaction.HandleInteraction(gameObject, transform.position);
     }
 
-    public void TriggerHover()
+    public void TriggerHoverEnter()
     {
-        if (!CheckPrerequisites())
-        {
-            return;
-        }
-        m_interaction.HandleHover(gameObject, transform.position);
+        m_interaction.HandleHoverEnter(gameObject, transform.position);
+    }
+    public void TriggerHoverExit()
+    {
+        m_interaction.HandleHoverExit(gameObject, transform.position);
     }
 }
