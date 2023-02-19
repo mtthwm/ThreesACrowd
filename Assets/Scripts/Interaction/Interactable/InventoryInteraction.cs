@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class InventoryInteraction : BaseInteraction
 {
+    public delegate void InventoryHoverAction (InventoryItem[] items);
+    public event InventoryHoverAction OnHover;
+
     private enum InventoryModificationMode
     {
         Add,
@@ -30,6 +33,11 @@ public class InventoryInteraction : BaseInteraction
                 InventoryManager.instance.RemoveItem(item);
             }
         }
+    }
+
+    protected override void Hover()
+    {
+        OnHover?.Invoke(items);
     }
 
     public InventoryItem[] GetItems ()

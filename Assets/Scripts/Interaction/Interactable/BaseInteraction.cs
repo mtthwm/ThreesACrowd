@@ -19,11 +19,21 @@ public abstract class BaseInteraction : MonoBehaviour
         if (origin == this.gameObject)
         {
             Action();
-            PostAction(); 
+            PostAction();
+        }
+    }
+
+    public void HandleHover(GameObject origin, Vector3 position)
+    {
+        if (origin == this.gameObject)
+        {
+            Hover();
         }
     }
 
     protected virtual void PostAction() { }
 
     protected abstract void Action();
+
+    protected virtual void Hover() { }
 }

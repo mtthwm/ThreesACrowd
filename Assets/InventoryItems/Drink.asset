@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Drink
   m_EditorClassIdentifier: 
   id: drink
-  icon: {fileID: 21300000, guid: 4d3daf5064f97be4bbece3c2fa963b4f, type: 3}
+  icon: {fileID: 21300000, guid: 0e15672d020722446ba75c9461edcc9d, type: 3}

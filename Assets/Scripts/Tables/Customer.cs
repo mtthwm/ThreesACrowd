@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Customer : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer orderIndicator;
+
     public enum Order
     {
         Appetizer,
@@ -13,6 +15,11 @@ public class Customer : MonoBehaviour
 
     public Table CurrentTable;
     public Order CurrentOrder;
+
+    private void Update()
+    {
+        orderIndicator.sprite = CurrentTable.OrderToCustomerItem(CurrentOrder).icon;
+    }
 
     public void RandomizeOrders ()
     {

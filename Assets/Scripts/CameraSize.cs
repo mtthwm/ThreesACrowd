@@ -10,7 +10,6 @@ public class CameraSize : MonoBehaviour
     private void Start ()
     {
         float orthoSize = fit.bounds.size.x * Screen.height / Screen.width * 0.5f;
-        Debug.Log(orthoSize);
         cam.orthographicSize = orthoSize;
     }
 }

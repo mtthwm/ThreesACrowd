@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Customer;
 
 public class Table : MonoBehaviour
 {
@@ -10,8 +11,19 @@ public class Table : MonoBehaviour
     [Header("API Stuff")]
     [SerializeField] private int maxSize;
     [SerializeField] public Customer[] occupants;
+    [SerializeField] private SpriteRenderer sprite;
+
+    [Header("Translation")]
+    [SerializeField] private InventoryItem appetizerItem;
+    [SerializeField] private InventoryItem drinkItem;
+    [SerializeField] private InventoryItem entreeItem;
+
+    public int TimerMax { get; set; } = 60000;
+    public int Timer { get; set; } = 60000;
 
     public TableManager TableManager;
+
+
     public int Vacancies { 
         get {
             int count = 0;
@@ -23,6 +35,19 @@ public class Table : MonoBehaviour
                 }
             }
             return maxSize - count;
+        }
+    }
+
+    private void Update()
+    {
+        if (maxSize - Vacancies == 3)
+        {
+            Timer -= (int)(Time.deltaTime * 1000);
+            sprite.enabled = true;
+        }
+        else
+        {
+            sprite.enabled = false;
         }
     }
 
@@ -136,7 +161,6 @@ public class Table : MonoBehaviour
     {
         int mid = maxSize / 2;
         int i = IndexOf(c) - mid;
-        Debug.Log(i + " " + c.transform.name);
         Vector2 position = (Vector2)transform.position + Vector2.right * i * spacing;
         c.transform.position = position;
         return position;
@@ -157,5 +181,38 @@ public class Table : MonoBehaviour
         buildString += ":";
         buildString += maxSize - Vacancies;
         return buildString;
+    }
+    public Order ItemToCustomerOrder(InventoryItem item)
+    {
+        if (item == appetizerItem)
+        {
+            return Order.Appetizer;
+        }
+        if (item == drinkItem)
+        {
+            return Order.Drink;
+        }
+        if (item == entreeItem)
+        {
+            return Order.Entree;
+        }
+        return Order.Entree;
+    }
+
+    public InventoryItem OrderToCustomerItem(Order order)
+    {
+        if (order == Order.Appetizer)
+        {
+            return appetizerItem;
+        }
+        if (order == Order.Drink)
+        {
+            return drinkItem;
+        }
+        if (order == Order.Entree)
+        {
+            return entreeItem;
+        }
+        return entreeItem;
     }
 }

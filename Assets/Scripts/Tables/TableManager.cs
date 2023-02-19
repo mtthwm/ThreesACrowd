@@ -21,7 +21,10 @@ public class TableManager : MonoBehaviour
         {
             if (mostVacancies == null)
             {
-                mostVacancies = t;
+                if (t.Vacancies > 0)
+                {
+                    mostVacancies = t;
+                }
                 continue;
             }
 
@@ -31,8 +34,11 @@ public class TableManager : MonoBehaviour
             }
         }
 
-        c.CurrentTable.Remove(c);
-        bool filledSpot = mostVacancies.FillVacancy(c);
+        if (mostVacancies != null)
+        {
+            c.CurrentTable.Remove(c);
+            bool filledSpot = mostVacancies.FillVacancy(c);
+        }
 
         RemovePairs();
     }

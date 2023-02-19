@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Appetizer
   m_EditorClassIdentifier: 
   id: appetizer
-  icon: {fileID: 21300000, guid: 181ee0ada147e6f4f827894019c75b4d, type: 3}
+  icon: {fileID: 21300000, guid: 939932cf2f1977d4595af83a38370125, type: 3}

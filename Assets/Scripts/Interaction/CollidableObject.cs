@@ -28,6 +28,19 @@ public class CollidableObject : MonoBehaviour
 
     public void TriggerInteraction()
     {
+        if (!CheckPrerequisites())
+        {
+            return;
+        }
         m_interaction.HandleInteraction(gameObject, transform.position);
+    }
+
+    public void TriggerHover()
+    {
+        if (!CheckPrerequisites())
+        {
+            return;
+        }
+        m_interaction.HandleHover(gameObject, transform.position);
     }
 }
