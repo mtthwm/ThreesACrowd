@@ -5,6 +5,9 @@ using static Customer;
 
 public class Table : MonoBehaviour
 {
+    public delegate void TimerAction (Table table);
+    public static event TimerAction OnTimerFinish;
+
     [Header("Display stuff")]
     [SerializeField] private float spacing = 1.5f;
 
@@ -18,11 +21,10 @@ public class Table : MonoBehaviour
     [SerializeField] private InventoryItem drinkItem;
     [SerializeField] private InventoryItem entreeItem;
 
-    public int TimerMax { get; set; } = 60000;
-    public int Timer { get; set; } = 60000;
+    public int TimerMax { get; set; } = 15000;
+    public int Timer { get; set; } = 15000;
 
     public TableManager TableManager;
-
 
     public int Vacancies { 
         get {
@@ -40,9 +42,14 @@ public class Table : MonoBehaviour
 
     private void Update()
     {
+        if (Timer == 0)
+        {
+            OnTimerFinish?.Invoke(this);
+        }
+
         if (maxSize - Vacancies == 3)
         {
-            Timer -= (int)(Time.deltaTime * 1000);
+            Timer = Mathf.Clamp(Timer - (int)(Time.deltaTime * 1000), 0, int.MaxValue);
             sprite.enabled = true;
         }
         else
@@ -53,6 +60,11 @@ public class Table : MonoBehaviour
 
     public void Remove (Customer c)
     {
+        if (c == null)
+        {
+            return;
+        }
+
         for (int i = 0; i < occupants.Length; i++)
         {
             if (occupants[i] == c)
@@ -103,15 +115,19 @@ public class Table : MonoBehaviour
     {
         for (int i = 0; i < occupants.Length; i++)
         {
-            occupants[i] = null;
+            if (occupants[i] != null)
+            {
+                Destroy(occupants[i].gameObject);
+                occupants[i] = null;
+            }
         }
     }
 
-    public void RemovePair ()
+    public bool RemovePair ()
     {
         if (Vacancies != maxSize - 2)
         {
-            return;
+            return false;
         }
 
         Customer currentCustomer = null;
@@ -130,7 +146,7 @@ public class Table : MonoBehaviour
 
             if (currentCustomer.CurrentOrder != occupants[i].CurrentOrder)
             {
-                return;
+                return false;
             }
         }
 
@@ -144,6 +160,7 @@ public class Table : MonoBehaviour
             Destroy(occupants[i].gameObject);
             occupants[i] = null;
         }
+        return true;
     }
 
     public void Deliver (Customer.Order order)
@@ -162,6 +179,7 @@ public class Table : MonoBehaviour
             }
         }
 
+        TableManager.RemovePairs();
         TableManager.UpdatePositions();
     }
 

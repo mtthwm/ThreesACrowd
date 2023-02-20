@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TableManager : MonoBehaviour
 {
+    public delegate void TableClearAction();
+    public static event TableClearAction OnClearTable;
 
     [SerializeField] private List<Table> tables = new List<Table>();
 
@@ -44,16 +47,33 @@ public class TableManager : MonoBehaviour
             c.CurrentTable.Remove(c);
             bool filledSpot = mostVacancies.FillVacancy(c);
         }
-
-        RemovePairs();
     }
 
-    private void RemovePairs ()
+    public void RemovePairs ()
     {
         foreach (Table t in tables)
         {
-            t.RemovePair();
+            bool removed = t.RemovePair();
+            if (removed)
+            {
+                OnClearTable?.Invoke();
+            }
         }
+
+        if (CheckClear())
+        {
+            GenerateCustomers();
+        }
+    }
+
+    public bool CheckClear()
+    {
+        int count = 0;
+        foreach (Table t in tables)
+        {
+            count += t.maxSize - t.Vacancies;
+        }
+        return count == 1;
     }
 
     public void UpdatePositions ()
@@ -86,23 +106,39 @@ public class TableManager : MonoBehaviour
 
     public void GenerateCustomers ()
     {
-        int count = 0;
         foreach (Table t in tables)
         {
             t.Clear();
-            count += t.maxSize;
         }
-        count -= 1;
 
-        Customer.Order[] orders = new Customer.Order[count];
-        for (int i = 0; i < count; i++)
+        int count = tables.Count * 2 + 1;
+
+        Customer.Order?[] orders = new Customer.Order?[count];
+        int filledCount = 0;
+        for (int i = 0; i < count / 2; i++)
         {
-            if (i == 0)
+            Customer.Order order = (Customer.Order) Random.Range(0, 3);
+
+            for (int j = 0; j < 2; j++)
             {
-                orders[i] = (Customer.Order) Random.Range(0, 3);
+                int candidate = -1;
+                while (candidate == -1 || orders[candidate] != null)
+                {
+                    candidate = Random.Range(0, orders.Length);
+                }
+                orders[candidate] = order;
+                filledCount++;
             }
-            // Yeah not my proudest moment
-            orders[i] = (Customer.Order) (((int)orders[i - 1] + Random.Range(1, 3)) % 3);
+        }
+        if (filledCount != orders.Length)
+        {
+            for (int i = 0; i < orders.Length; i++)
+            {
+                if (orders[i] == null)
+                {
+                    orders[i] = (Customer.Order)Random.Range(0, 3);
+                }
+            }
         }
 
         int tableIndex = 0;
@@ -111,7 +147,7 @@ public class TableManager : MonoBehaviour
             GameObject customerObject = Instantiate(customerPrefabs[m_currentPrefabIndex]);
             m_currentPrefabIndex = (m_currentPrefabIndex + 1) % customerPrefabs.Length;
             Customer c = customerObject.GetComponent<Customer>();
-            c.CurrentOrder = orders[i];
+            c.CurrentOrder = (Customer.Order) orders[i];
             c.CurrentTable = tables[tableIndex];
             tables[tableIndex].FillVacancy(c);
 
